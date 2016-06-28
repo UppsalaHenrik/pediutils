@@ -1,0 +1,10 @@
+Package: nmsurfaceplot
+Title: Draw OFV surface plots of NONMEM models
+Version: 0.1.1
+Authors@R: "Henrik Bjugård Nyberg <henrik.b.nyberg@farmbio.uu.se> [aut, cre]"
+Description: What the package does (one paragraph)
+Depends:
+    R (>= 3.0)
+License: What license is it under?
+LazyData: true
+RoxygenNote: 5.0.1
