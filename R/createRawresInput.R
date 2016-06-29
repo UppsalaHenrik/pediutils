@@ -2,12 +2,20 @@
 #' 
 #' Creates a csv file with formatting compatible with raw results files from PsN.
 #' 
-#' @param modFilePath Model file to use. The function assumes that there is an ext file with the same base file name.
-#' @param paramsToCompare A vector of two parameter names following the NONMEM ext file standard names. Default is c("THETA1", "THETA2").
-#' @param lims1 A vector of two values, lower and upper limit for the first paramsToCompare. Default is 1 percent below and above the original value
-#' @param lims2 A vector of two values, lower and upper limit for the second paramsToCompare. Default is 1 percent below and above the original value
-#' @param absolute Whether or not to take the absolute value of all parameter values before constructing the input file. Default is FALSE.
-#' @param resol Resolution on each axis. Default is 10 and will return 10^2 = 100 sets of parameter values.
+#' @param modFilePath Model file to use. The function assumes that there is an
+#'        ext file with the same base file name.
+#' @param paramsToCompare A vector of two parameter names following the NONMEM
+#'        ext file standard names. Default is c("THETA1", "THETA2").
+#' @param lims1 A vector of two values, lower and upper limit for the first 
+#'        paramsToCompare. Default is 1 percent below and above the original 
+#'        value
+#' @param lims2 A vector of two values, lower and upper limit for the second 
+#'        paramsToCompare. Default is 1 percent below and above the original 
+#'        value
+#' @param absolute Whether or not to take the absolute value of all parameter 
+#'        values before constructing the input file. Default is FALSE.
+#' @param resol Resolution on each axis. Default is 10 and will return 
+#'        10^2 = 100 sets of parameter values.
 #' 
 #' 
 #' @export
@@ -20,7 +28,13 @@ createRawresInput <- function(modFilePath, paramsToCompare = c("THETA1", "THETA2
                               absolute = TRUE, resol = 10){
   
   
-  # This is dependent on there not being a FILE option set on the $EST. Not great but fine for now.
+  # This is dependent on there not being a FILE option set on the $EST. Not 
+  # great but fine for now.
+  ### TODO: add handling for FILE option and multiple $ESTs. Probably move this
+  ###       to prepModFile function... 
+  
+  ### TODO: If model isn't executed it should be.
+  
   modFileNameNoExt <- sub("\\.[[:alnum:]]+$", "", basename(as.character(modFilePath)))
   extFileName <- paste0(modFileNameNoExt, ".ext")
   
@@ -53,7 +67,8 @@ createRawresInput <- function(modFilePath, paramsToCompare = c("THETA1", "THETA2
     lims2 <- sort(abs(lims2))
   }
   
-  # Getting the columns for the different parameter types so that I can reorder and remove unnecessary ones
+  # Getting the columns for the different parameter types so that I can reorder
+  # and remove unnecessary ones
   thetaCols <- grep("THETA", names(paramVectorFull))
   omegaCols <- grep("OMEGA", names(paramVectorFull))
   sigmaCols <- grep("SIGMA", names(paramVectorFull))
