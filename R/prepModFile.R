@@ -15,9 +15,9 @@ prepModFile <- function(modFilePath, mceta){
   # Removing comments
   modFile <- gsub("[[:space:]];.+", "", modFileOrig)
   
-  # Unfix all parameters. We control the exact values anyway. This may 
-  modFile <- gsub("[[:space:]]FIXED", "", modFile)
-  modFile <- gsub("[[:space:]]FIX", "", modFile)
+  # # Unfix all parameters. We control the exact values anyway. This may 
+  # modFile <- gsub("[[:space:]]FIXED", "", modFile)
+  # modFile <- gsub("[[:space:]]FIX", "", modFile)
 
   # Get the $ statement rows. 
   dollarAndLastRows <- c(grep("^\\$", modFile), length(modFile)+1)
