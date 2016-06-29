@@ -13,7 +13,7 @@ prepModFile <- function(modFilePath, mceta){
   modFileOrig <- readLines(modFilePath)
   
   # Removing comments
-  modFile <- gsub("[[:space:]];.+", "", modFile)
+  modFile <- gsub("[[:space:]];.+", "", modFileOrig)
   
   # Unfix all parameters. We control the exact values anyway. This may 
   modFile <- gsub("[[:space:]]FIXED", "", modFile)
