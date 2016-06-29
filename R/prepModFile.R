@@ -42,7 +42,7 @@ prepModFile <- function(modFilePath, mceta){
   
   # So far I'm hardcoding the estimation statement. There could be benefit
   # to opening this up to user specified as well.
-  newEstRow <- "$EST METHOD=COND INTER MAXEVALS=0 PRINT=9999"
+  newEstRow <- "$EST METHOD=COND LAPLACE NOABORT MAXEVALS=0 PRINT=9999"
   modFile <- c(modFile, newEstRow)
   
   newModFileName <- paste0("new_", basename(modFilePath))
