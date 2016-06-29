@@ -2,6 +2,7 @@
 
 export(createPlotlyObj)
 export(createRawresInput)
+export(parseExtFile)
 export(parseRawres)
 export(plotSurface)
 export(runParaRetries)

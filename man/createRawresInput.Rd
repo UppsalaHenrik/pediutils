@@ -11,17 +11,25 @@ createRawresInput(modFilePath, paramsToCompare = c("THETA1", "THETA2"),
   as.numeric(paramVector[paramsToCompare[2]])), absolute = TRUE, resol = 10)
 }
 \arguments{
-\item{modFilePath}{Model file to use. The function assumes that there is an ext file with the same base file name.}
+\item{modFilePath}{Model file to use. The function assumes that there is an
+ext file with the same base file name.}
 
-\item{paramsToCompare}{A vector of two parameter names following the NONMEM ext file standard names. Default is c("THETA1", "THETA2").}
+\item{paramsToCompare}{A vector of two parameter names following the NONMEM
+ext file standard names. Default is c("THETA1", "THETA2").}
 
-\item{lims1}{A vector of two values, lower and upper limit for the first paramsToCompare. Default is 1 percent below and above the original value}
+\item{lims1}{A vector of two values, lower and upper limit for the first 
+paramsToCompare. Default is 1 percent below and above the original 
+value}
 
-\item{lims2}{A vector of two values, lower and upper limit for the second paramsToCompare. Default is 1 percent below and above the original value}
+\item{lims2}{A vector of two values, lower and upper limit for the second 
+paramsToCompare. Default is 1 percent below and above the original 
+value}
 
-\item{absolute}{Whether or not to take the absolute value of all parameter values before constructing the input file. Default is FALSE.}
+\item{absolute}{Whether or not to take the absolute value of all parameter 
+values before constructing the input file. Default is FALSE.}
 
-\item{resol}{Resolution on each axis. Default is 10 and will return 10^2 = 100 sets of parameter values.}
+\item{resol}{Resolution on each axis. Default is 10 and will return 
+10^2 = 100 sets of parameter values.}
 }
 \description{
 Creates a csv file with formatting compatible with raw results files from PsN.
