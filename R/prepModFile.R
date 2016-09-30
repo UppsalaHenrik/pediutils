@@ -1,6 +1,12 @@
+#' 
+#' 
+#'  
+#' 
+#' #@export
 
-
-prepModFile <- function(modFilePath, mceta){
+prepModFile <- function(modFilePath, estStatement = paste("$EST METHOD=COND",
+                                                          "NOABORT MAXEVALS=0",
+                                                          "PRINT=9999")){
 
   # Check that the file exists
   if(!file.exists(modFilePath)){
@@ -42,7 +48,7 @@ prepModFile <- function(modFilePath, mceta){
   
   # So far I'm hardcoding the estimation statement. There could be benefit
   # to opening this up to user specified as well.
-  newEstRow <- "$EST METHOD=COND NOABORT MAXEVALS=0 PRINT=9999"
+  newEstRow <- estStatement
   modFile <- c(modFile, newEstRow)
   
   newModFileName <- paste0("new_", basename(modFilePath))

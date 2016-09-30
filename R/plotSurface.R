@@ -25,6 +25,9 @@
 #'        cleaning level.
 #' @param origVals Whether or not to plot the original model final estimate as 
 #'        a point in the plot.
+#' @param estStatement The estimation statement to use for OFV evaluation. Remember 
+#'        to include the MAXEVALS=0 option. Default is $EST METHOD=COND NOABORT 
+#'        MAXEVALS=0 PRINT=9999
 #' @param ... Further options to createRawresInput
 #' 
 #' @export
@@ -34,13 +37,20 @@ plotSurface <- function(plotlyUsername, plotlyKey, modFilePath,
                         paramsToCompare = c("THETA1", "THETA2"), 
                         resol = 10, ofvScaling = FALSE, absolute = FALSE,
                         slurm_partition = "standard", cleanLevel = 4, 
-                        plotOrigVals = FALSE, ...){
+                        plotOrigVals = FALSE, 
+                        estStatement = paste("$EST METHOD=COND",
+                                             "NOABORT MAXEVALS=0",
+                                             "PRINT=9999"),
+                        ...){
   
   require(plotly)
   Sys.setenv("plotly_username" = plotlyUsername)
   Sys.setenv("plotly_api_key" = plotlyKey)
   
-  newModFileName <- prepModFile(modFilePath)
+  newModFileName <- prepModFile(modFilePath, 
+                                estStatement = paste("$EST METHOD=COND",
+                                                     "NOABORT MAXEVALS=0",
+                                                     "PRINT=9999"))
   
   
   print("Creating the rawres input file")
