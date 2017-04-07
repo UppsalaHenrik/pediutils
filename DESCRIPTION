@@ -1,6 +1,6 @@
-Package: nmsurfaceplot
-Title: Draw OFV surface plots of NONMEM models
-Version: 0.1.1
+Package: pediutils
+Title: Some simple utilities for pediatrics data
+Version: 0.1
 Authors@R: "Henrik Bjugård Nyberg <henrik.b.nyberg@farmbio.uu.se> [aut, cre]"
 Description: What the package does (one paragraph)
 Depends:
