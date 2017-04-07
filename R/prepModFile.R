@@ -21,7 +21,7 @@ prepModFile <- function(modFilePath, estStatement = paste("$EST METHOD=COND",
   # Removing comments
   modFile <- gsub("[[:space:]];.+", "", modFileOrig)
   
-  # # Unfix all parameters. We control the exact values anyway. This may 
+  # # Unfix all parameters. We control the exact values anyway. This is unnecessary, removed.
   # modFile <- gsub("[[:space:]]FIXED", "", modFile)
   # modFile <- gsub("[[:space:]]FIX", "", modFile)
 
