@@ -112,13 +112,13 @@ calcZScores <- function(df, ageVar = "AGE", weightVar = "WT", heightVar = "HT",
 
     # If over 5 years use WHO 2007 and otherwise use 2006
     if(whoDf$age.days > 1856){
-      HAZ2 <- calc.zhfa.over5(whoDf, WHOdata$hfawho2007)[1]
-      WAZ2 <- calc.zwei.over5(whoDf, WHOdata$wfawho2007)[1]
-      BAZ2 <- calc.zbmi.over5(whoDf, WHOdata$bfawho2007)[1]
+      HAZ <- calc.zhfa.over5(whoDf, WHOdata$hfawho2007)[1]
+      WAZ <- calc.zwei.over5(whoDf, WHOdata$wfawho2007)[1]
+      BAZ <- calc.zbmi.over5(whoDf, WHOdata$bfawho2007)[1]
     }else{
-      HAZ2 <- calc.zlen.upto5(whoDf, WHOdata$lenanthro)[1]
-      WAZ2 <- calc.zwei.upto5(whoDf, WHOdata$weianthro)[1]
-      BAZ2 <- calc.zbmi.upto5(whoDf, WHOdata$bmianthro)[1]
+      HAZ <- calc.zlen.upto5(whoDf, WHOdata$lenanthro)[1]
+      WAZ <- calc.zwei.upto5(whoDf, WHOdata$weianthro)[1]
+      BAZ <- calc.zbmi.upto5(whoDf, WHOdata$bmianthro)[1]
     }
     
     zVals <- c(HAZ, WAZ, BAZ)
