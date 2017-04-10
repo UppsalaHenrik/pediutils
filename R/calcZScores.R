@@ -121,8 +121,8 @@ calcZScores <- function(df, ageVar = "AGE", weightVar = "WT", heightVar = "HT",
       BAZ2 <- calc.zbmi.upto5(whoDf, WHOdata$bmianthro)[1]
     }
     
-    zVals <- c(HAZ2, WAZ2, BAZ2)
-    names(zVals) <- c("HAZ2", "WAZ2", "BAZ2")
+    zVals <- c(HAZ, WAZ, BAZ)
+    names(zVals) <- c("HAZ", "WAZ", "BAZ")
     
     # Return in some fashion...
     return(zVals)
