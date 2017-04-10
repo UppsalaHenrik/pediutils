@@ -4,21 +4,39 @@
 #' returns a vector of the same length as the number of columns
 #' in that data frame.
 #' 
-#' @param df
-#' @param idVar
-#' @param ageVar
-#' @param weightVar
-#' @param heightVar
-#' @param sexVar
-#' @param ageUnit 
-#' @param heightConv
-#' @param weightConv 
-#' @param femaleSexVal
-#' @param maleSexVal
-#' @param childCutoff
-#' @param missingVal
+#' @param df A data frame with all necessary columns for calculation of fat 
+#'           free mass.
+#' @param idVar Name of the id column in df. Default is "ID".
+#' @param ageVar Name of the age column in df. Default is "AGE".
+#' @param weightVar Name of the weight column in df. Default is "WT".
+#' @param heightVar Name of the height column in df. Default is "HT".
+#' @param sexVar Name of the sex column in df. Default is "SEX".
+#' @param heightConv Height conversion factor to meters. Height*heightConv 
+#'                   is height in meters. Default is 0.01, meaning that 
+#'                   centimeters is expected in data.
+#' @param weightConv Weight conversion factor to kilograms. Default is 1,
+#'                   meaning that kilograms is expected in data. There is 
+#'                   currently no support for stones or pounds.
+#' @param femaleSexVal The value denoting female sex in the supplied df.
+#'                     Default is 2.
+#' @param maleSexVal The value denoting male sex in the supplied df. Default 
+#'                   is 1.
+#' @param ageUnit A single string describing the unit for age in the data. 
+#'                "years", "months", or "days" are allowed. Defult is "years" 
+#' @param missingVal The value that will be inserted in place of Z-scores that
+#'                   cannot be determined. Either because age is out of bounds 
+#'                   of the reference WHO data, or because one of the required
+#'                   values for age, weight, or height was missing from input 
+#'                   data. Default is -99 according to Perl speaks NONMEM 
+#'                   standard.
+#' @param childCutoff The age, in years, at which a person is considered to be
+#'                    an adult. Default is 18.
 #' 
 #' @export
+#' 
+#'
+#' 
+#' 
 
 calcFatFreeMassCol <- function(df, idVar = "ID", ageVar = "AGE",
                                weightVar = "WT", heightVar = "HT", 
@@ -91,8 +109,8 @@ calcFatFreeMassCol <- function(df, idVar = "ID", ageVar = "AGE",
         ((whsMax*ht2*wt)/(whs50*ht2+wt))
     }
     
-    # Warn if any FFM values are calculated higher than 100% or 
-    # lower than 10% of weight
+    # Warn if any FFM values are calculated higher than 100 percent or 
+    # lower than 10 percent of weight
     if(ffm/wt >=1 || ffm/wt <=0.1){
       warning(paste("ID", id, "has an implausible FFM value."))
     }
