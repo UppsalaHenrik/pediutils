@@ -21,12 +21,12 @@
 #' @export
 
 calcFatFreeMassCol <- function(df, idVar = "ID", ageVar = "AGE",
-                           weightVar = "WT", heightVar = "HT", 
-                           sexVar = "SEX", ageUnit = "years", 
-                           heightConv = .01, weightConv = 1, 
-                           femaleSexVal = 2, maleSexVal = 1,
-                           childCutoff = 18, missingVal = -99){
-
+                               weightVar = "WT", heightVar = "HT", 
+                               sexVar = "SEX", ageUnit = "years", 
+                               heightConv = .01, weightConv = 1, 
+                               femaleSexVal = 2, maleSexVal = 1,
+                               childCutoff = 18, missingVal = -99){
+  
   # If not all required columns are there, abort
   sapply(c(idVar, ageVar, weightVar, heightVar, sexVar), function(x){
     if(!x %in% colnames(df)){
@@ -34,8 +34,24 @@ calcFatFreeMassCol <- function(df, idVar = "ID", ageVar = "AGE",
                  "Did you set all variable names?"))
     }
   })
-
-  # Assign the appripriate 
+  
+  # Make age unit option lower case. 
+  # TODO: Should handle case for other string options maybe...
+  ageUnit <- tolower(ageUnit)
+  # Assign the appripriate age conversion
+  if(ageUnit == "days" | ageUnit == "day" | ageUnit == "d"){
+    ageConv <- 1/365.25
+  } else if(ageUnit == "weeks" | ageUnit == "week" | ageUnit == "w"){
+    ageConv <- 1/52
+  } else if(ageUnit == "months" | ageUnit == "month" | ageUnit == "m"){
+    ageConv <- 1/12
+  } else if(ageUnit == "months" | ageUnit == "" | ageUnit == "y"){
+    ageConv <- 1
+  } else {
+    stop(paste("Option ageUnit must be one of the accepted string options:",
+               "days, weeks, months, or years. You specified ageUnit as: ", 
+               ageUnit))
+  }
   
   # apply over all rows to determine the constants to use
   ffmVec <- unname(apply(df, 1, function(x){
@@ -84,6 +100,6 @@ calcFatFreeMassCol <- function(df, idVar = "ID", ageVar = "AGE",
     # Return the vector for appending to 
     return(ffm)
   }))
-
+  
   return(ffmVec)
 }
