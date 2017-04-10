@@ -63,7 +63,7 @@ calcFatFreeMassCol <- function(df, idVar = "ID", ageVar = "AGE",
     ageConv <- 1/52
   } else if(ageUnit == "months" | ageUnit == "month" | ageUnit == "m"){
     ageConv <- 1/12
-  } else if(ageUnit == "months" | ageUnit == "" | ageUnit == "y"){
+  } else if(ageUnit == "years" | ageUnit == "year" | ageUnit == "y"){
     ageConv <- 1
   } else {
     stop(paste("Option ageUnit must be one of the accepted string options:",
