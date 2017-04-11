@@ -1,8 +1,7 @@
 Package: pediutils
 Title: Some simple utilities for PMX modelling in paediatrics.
 Version: 0.1
-Authors@R: person("Henrik", "Bjugård Nyberg", email = "henrik.b.nyberg@farmbio.uu.se",
-                  role = c("aut", "cre"))
+Authors@R: 
 Description: What the package does (one paragraph)
 Depends:
     R (>= 3.0)

@@ -6,11 +6,16 @@
 #' 
 #' @param df A data frame with all necessary columns for calculation of fat 
 #'           free mass.
-#' @param idVar Name of the id column in df. Default is "ID".
-#' @param ageVar Name of the age column in df. Default is "AGE".
-#' @param weightVar Name of the weight column in df. Default is "WT".
-#' @param heightVar Name of the height column in df. Default is "HT".
-#' @param sexVar Name of the sex column in df. Default is "SEX".
+#' @param idVar Name of the id column in df. Default is "ID" but it is 
+#'               not case sensitive.
+#' @param ageVar Name of the age column in df. Default is "AGE" but it is 
+#'               not case sensitive.
+#' @param weightVar Name of the weight column in df. Default is "WT" but it is 
+#'               not case sensitive.
+#' @param heightVar Name of the height column in df. Default is "HT" but it is 
+#'               not case sensitive.
+#' @param sexVar Name of the sex column in df. Default is "SEX" but it is 
+#'               not case sensitive.
 #' @param heightConv Height conversion factor to meters. Height*heightConv 
 #'                   is height in meters. Default is 0.01, meaning that 
 #'                   centimeters is expected in data.
@@ -53,9 +58,17 @@ calcFatFreeMassCol <- function(df, idVar = "ID", ageVar = "AGE",
     }
   })
   
-  # Make age unit option lower case. 
-  # TODO: Should handle case for other string options maybe...
+  # Make options lower case to be case insensitive.
+  idVar <- tolower(idVar)
+  ageVar <- tolower(ageVar)
+  weightVar <- tolower(weightVar)
+  heightVar <- tolower(heightVar)
+  sexVar <- tolower(sexVar)
   ageUnit <- tolower(ageUnit)
+  
+  # Make column names lower case to match
+  names(df) <- tolower(names(df))
+  
   # Assign the appripriate age conversion
   if(ageUnit == "days" | ageUnit == "day" | ageUnit == "d"){
     ageConv <- 1/365.25
