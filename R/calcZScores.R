@@ -6,6 +6,8 @@
 #' Returns a data frame with the same number of rows as the input data frame.
 #' 
 #' @param df A data frame with all necessary columns for calculation of Z-scores.
+#' @param idVar Name of the id column in df. Default is "ID" but it is 
+#'              not case sensitive.
 #' @param ageVar Name of the age column in df. Default is "AGE" but it is not 
 #'               case sensitive.
 #' @param weightVar Name of the weight column in df. Default is "WT" but it is not 
@@ -43,10 +45,13 @@
 
 
 
-calcZScores <- function(df, ageVar = "AGE", weightVar = "WT", heightVar = "HT",
-                        heightConv = .01, weightConv = 1, femaleSexVal = 2, 
-                        maleSexVal = 1, sexVar = "SEX", ageUnit = "years", 
-                        missingVal = -99){
+calcZScores <- function(df, idVar = "ID", ageVar = "AGE", weightVar = "WT", 
+                        heightVar = "HT", heightConv = .01, weightConv = 1, 
+                        femaleSexVal = 2, maleSexVal = 1, sexVar = "SEX", 
+                        ageUnit = "years", missingVal = -99){
+  
+  # Pick out necessary columns and make sure it's a data frame
+  df <- as.data.frame(df[c(idVar, ageVar, weightVar, heightVar, sexVar)])
   
   # If not all required columns are there, abort
   sapply(c(ageVar, weightVar, heightVar, sexVar), function(x){
@@ -56,7 +61,8 @@ calcZScores <- function(df, ageVar = "AGE", weightVar = "WT", heightVar = "HT",
     }
   })
   
-  # Make options lower case to be case insensitive.
+  # Make options lower case to be case insensitive. Not pretty, I know...
+  idVar <- tolower(idVar)
   ageVar <- tolower(ageVar)
   weightVar <- tolower(weightVar)
   heightVar <- tolower(heightVar)
@@ -65,6 +71,16 @@ calcZScores <- function(df, ageVar = "AGE", weightVar = "WT", heightVar = "HT",
   
   # Make column names lower case to match
   names(df) <- tolower(names(df))
+  
+  # Find IDs with incomplete data
+  incompIds <- unique(df$id[!complete.cases(df)])
+  incompIdString <- paste(incompIds, collapse = ", ")
+  
+  if(!incompIdString == ""){
+    mess <- paste("IDs", incompIds, "are missing necessary data. Calculations",
+                  "will not be performed for these IDs.")
+    warning(mess)
+  }
   
   # Assign the appripriate age conversion
   if(ageUnit == "days" | ageUnit == "day" | ageUnit == "d"){
@@ -81,19 +97,25 @@ calcZScores <- function(df, ageVar = "AGE", weightVar = "WT", heightVar = "HT",
                ageUnit))
   }
   
-  dfList <- split(df[c(ageVar, weightVar, heightVar, sexVar)], 
-                  seq(nrow(df)))
+  dfList <- split(df, seq(nrow(df)))
   
   # Apply over data frame
   zScoreList <- lapply(dfList, function(x){
-    
+
     # Unlist to make sure
-    x <- unlist(x, use.names = FALSE)
+    x <- as.numeric(unlist(x, use.names = FALSE))
+    
+    # Safeguard against NA values
+    if(any(is.na(x))){
+      missinValVec <- rep(missingVal, 3)
+      names(missinValVec) <- c("HAZ", "WAZ", "BAZ")
+      return(missinValVec)
+    }
     
     # Convert sex values to WHO standard
-    if(x[4] == femaleSexVal){
+    if(x[5] == femaleSexVal){
       whoSex <- 2
-    }else if(x[4] == maleSexVal){
+    }else if(x[5] == maleSexVal){
       whoSex <- 1
     }else{
       whoSex <- NA
@@ -101,17 +123,17 @@ calcZScores <- function(df, ageVar = "AGE", weightVar = "WT", heightVar = "HT",
     whoDf <- data.frame(sex = whoSex)
     
     # Convert age to years, months and days
-    whoDf$age.years <- x[1]*ageConv
+    whoDf$age.years <- x[2]*ageConv
     whoDf$age.mo <- whoDf$age.years*12
     whoDf$age.days <- round(whoDf$age.years*365.25)
     
     # WHO reference heights are in centimeters
-    whoDf$htm <- x[3]*heightConv
+    whoDf$htm <- x[4]*heightConv
     whoDf$clenhei <-  whoDf$htm*100
     whoDf$height <-  whoDf$htm*100
     
     # Add weight
-    whoDf$weight <- x[2]*weightConv
+    whoDf$weight <- x[3]*weightConv
     
     # Assume no oedema
     whoDf$oedema <- "n"

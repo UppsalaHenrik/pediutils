@@ -4,12 +4,15 @@
 \alias{calcZScores}
 \title{calcZScores}
 \usage{
-calcZScores(df, ageVar = "AGE", weightVar = "WT", heightVar = "HT",
-  heightConv = 0.01, weightConv = 1, femaleSexVal = 2, maleSexVal = 1,
-  sexVar = "SEX", ageUnit = "years", missingVal = -99)
+calcZScores(df, idVar = "ID", ageVar = "AGE", weightVar = "WT",
+  heightVar = "HT", heightConv = 0.01, weightConv = 1, femaleSexVal = 2,
+  maleSexVal = 1, sexVar = "SEX", ageUnit = "years", missingVal = -99)
 }
 \arguments{
 \item{df}{A data frame with all necessary columns for calculation of Z-scores.}
+
+\item{idVar}{Name of the id column in df. Default is "ID" but it is 
+not case sensitive.}
 
 \item{ageVar}{Name of the age column in df. Default is "AGE" but it is not 
 case sensitive.}

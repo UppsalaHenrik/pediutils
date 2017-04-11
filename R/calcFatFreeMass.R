@@ -50,6 +50,9 @@ calcFatFreeMass <- function(df, idVar = "ID", ageVar = "AGE",
                             femaleSexVal = 2, maleSexVal = 1,
                             childCutoff = 18, missingVal = -99){
   
+  # Make sure it's a data frame  and cut out the necessary columns
+  df <- as.data.frame(df[c(idVar, ageVar, weightVar, heightVar, sexVar)])
+  
   # If not all required columns are there, abort
   sapply(c(idVar, ageVar, weightVar, heightVar, sexVar), function(x){
     if(!x %in% colnames(df)){
@@ -58,7 +61,7 @@ calcFatFreeMass <- function(df, idVar = "ID", ageVar = "AGE",
     }
   })
   
-  # Make options lower case to be case insensitive.
+  # Make options lower case to be case insensitive. Not pretty, I know...
   idVar <- tolower(idVar)
   ageVar <- tolower(ageVar)
   weightVar <- tolower(weightVar)
@@ -68,6 +71,16 @@ calcFatFreeMass <- function(df, idVar = "ID", ageVar = "AGE",
   
   # Make column names lower case to match
   names(df) <- tolower(names(df))
+  
+  # Find IDs with incomplete data
+  incompIds <- unique(df$id[!complete.cases(df)])
+  incompIdString <- paste(incompIds, collapse = ", ")
+  
+  if(!incompIdString == ""){
+    mess <- paste("IDs", incompIds, "are missing necessary data. Calculations",
+                  "will not be performed for these IDs.")
+    warning(mess)
+  }
   
   # Assign the appripriate age conversion
   if(ageUnit == "days" | ageUnit == "day" | ageUnit == "d"){
@@ -86,8 +99,14 @@ calcFatFreeMass <- function(df, idVar = "ID", ageVar = "AGE",
   
   # apply over all rows to determine the constants to use
   ffmVec <- unname(apply(df, 1, function(x){
+    
+    # Safeguard against NA values
+    if(any(is.na(x))){
+      return(missingVal)
+    }
+    
     # First set constants according to sex
-    if(x[sexVar] == femaleSexVal){
+    if(as.numeric(x[5]) == femaleSexVal){
       alAlpha <- 1.11
       a50     <- 7.1
       alGamma <- 1.1
@@ -102,18 +121,17 @@ calcFatFreeMass <- function(df, idVar = "ID", ageVar = "AGE",
     }
     
     # Pick out id
-    id <- as.numeric(x[idVar])
+    id <- as.numeric(x[1])
     # Calculate height^2 in meters
-    ht2 <- (as.numeric(x[heightVar])*heightConv)^2
+    ht2 <- (as.numeric(x[4])*heightConv)^2
     # Convert weight if needed
-    wt  <- as.numeric(x[weightVar])*weightConv
+    wt  <- as.numeric(x[3])*weightConv
     # Pick out age and 
-    age <- as.numeric(x[ageVar])*ageConv
+    age <- as.numeric(x[2])*ageConv
     # Some presteps to the calculation
     ageGam <- age^alGamma
     a50Gam  <- a50^alGamma
-    
-    
+
     # Use FFM formula according to adult or not
     if(age >= childCutoff){
       ffm <- (whsMax*ht2*wt)/(whs50*ht2+wt)
