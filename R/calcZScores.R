@@ -2,7 +2,8 @@
 #' 
 #' A function that calculates height-for-age, weight-for-age, and BMI-for-age
 #' Z-scores based on WHO reference data. Please note that height-for-age is 
-#' only covered for up to 10 years old in the 2007 WHO growth reference.
+#' only covered for up to 10 years old in the 2007 WHO growth reference. 
+#' Returns a data frame with the same number of rows as the input data frame.
 #' 
 #' @param df A data frame with all necessary columns for calculation of Z-scores.
 #' @param ageVar Name of the age column in df. Default is "AGE" but it is not 

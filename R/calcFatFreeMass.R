@@ -1,7 +1,7 @@
-#' calcFatFreeMassCol
+#' calcFatFreeMass
 #' 
 #' Calculates fat free mass for each row in a data frame and 
-#' returns a vector of the same length as the number of columns
+#' returns a vector of the same length as the number of rowss
 #' in that data frame.
 #' 
 #' @param df A data frame with all necessary columns for calculation of fat 
@@ -43,12 +43,12 @@
 #' 
 #' 
 
-calcFatFreeMassCol <- function(df, idVar = "ID", ageVar = "AGE",
-                               weightVar = "WT", heightVar = "HT", 
-                               sexVar = "SEX", ageUnit = "years", 
-                               heightConv = .01, weightConv = 1, 
-                               femaleSexVal = 2, maleSexVal = 1,
-                               childCutoff = 18, missingVal = -99){
+calcFatFreeMass <- function(df, idVar = "ID", ageVar = "AGE",
+                            weightVar = "WT", heightVar = "HT", 
+                            sexVar = "SEX", ageUnit = "years", 
+                            heightConv = .01, weightConv = 1, 
+                            femaleSexVal = 2, maleSexVal = 1,
+                            childCutoff = 18, missingVal = -99){
   
   # If not all required columns are there, abort
   sapply(c(idVar, ageVar, weightVar, heightVar, sexVar), function(x){
