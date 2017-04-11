@@ -13,20 +13,15 @@ calcFatFreeMassCol(df, idVar = "ID", ageVar = "AGE", weightVar = "WT",
 \item{df}{A data frame with all necessary columns for calculation of fat 
 free mass.}
 
-\item{idVar}{Name of the id column in df. Default is "ID" but it is 
-not case sensitive.}
+\item{idVar}{Name of the id column in df. Default is "ID".}
 
-\item{ageVar}{Name of the age column in df. Default is "AGE" but it is 
-not case sensitive.}
+\item{ageVar}{Name of the age column in df. Default is "AGE".}
 
-\item{weightVar}{Name of the weight column in df. Default is "WT" but it is 
-not case sensitive.}
+\item{weightVar}{Name of the weight column in df. Default is "WT".}
 
-\item{heightVar}{Name of the height column in df. Default is "HT" but it is 
-not case sensitive.}
+\item{heightVar}{Name of the height column in df. Default is "HT".}
 
-\item{sexVar}{Name of the sex column in df. Default is "SEX" but it is 
-not case sensitive.}
+\item{sexVar}{Name of the sex column in df. Default is "SEX".}
 
 \item{ageUnit}{A single string describing the unit for age in the data. 
 "years", "months", or "days" are allowed. Defult is "years"}
