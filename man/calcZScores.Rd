@@ -11,11 +11,14 @@ calcZScores(df, ageVar = "AGE", weightVar = "WT", heightVar = "HT",
 \arguments{
 \item{df}{A data frame with all necessary columns for calculation of Z-scores.}
 
-\item{ageVar}{Name of the age column in df. Default is "AGE"}
+\item{ageVar}{Name of the age column in df. Default is "AGE" but it is not 
+case sensitive.}
 
-\item{weightVar}{Name of the weight column in df. Default is "WT"}
+\item{weightVar}{Name of the weight column in df. Default is "WT" but it is not 
+case sensitive.}
 
-\item{heightVar}{Name of the height column in df. Default is "HT"}
+\item{heightVar}{Name of the height column in df. Default is "HT" but it is not 
+case sensitive.}
 
 \item{heightConv}{Height conversion factor to meters. Height*heightConv 
 is height in meters. Default is 0.01, meaning that 
@@ -31,10 +34,12 @@ Default is 2.}
 \item{maleSexVal}{The value denoting male sex in the supplied df. Default 
 is 1.}
 
-\item{sexVar}{Name of the sex column in df. Default is "SEX"}
+\item{sexVar}{Name of the sex column in df. Default is "SEX" but it is not 
+case sensitive.}
 
 \item{ageUnit}{A single string describing the unit for age in the data. 
-"years", "months", or "days" are allowed. Defult is "years"}
+"years", "months", or "days" are allowed. Defult is "years" 
+but it is not case sensitive.}
 
 \item{missingVal}{The value that will be inserted in place of Z-scores that
 cannot be determined. Either because age is out of bounds 

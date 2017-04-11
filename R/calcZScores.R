@@ -5,10 +5,14 @@
 #' only covered for up to 10 years old in the 2007 WHO growth reference.
 #' 
 #' @param df A data frame with all necessary columns for calculation of Z-scores.
-#' @param ageVar Name of the age column in df. Default is "AGE"
-#' @param weightVar Name of the weight column in df. Default is "WT"
-#' @param heightVar Name of the height column in df. Default is "HT"
-#' @param sexVar Name of the sex column in df. Default is "SEX"
+#' @param ageVar Name of the age column in df. Default is "AGE" but it is not 
+#'               case sensitive.
+#' @param weightVar Name of the weight column in df. Default is "WT" but it is not 
+#'               case sensitive.
+#' @param heightVar Name of the height column in df. Default is "HT" but it is not 
+#'               case sensitive.
+#' @param sexVar Name of the sex column in df. Default is "SEX" but it is not 
+#'               case sensitive.
 #' @param heightConv Height conversion factor to meters. Height*heightConv 
 #'                   is height in meters. Default is 0.01, meaning that 
 #'                   centimeters is expected in data.
@@ -21,6 +25,7 @@
 #'                   is 1.
 #' @param ageUnit A single string describing the unit for age in the data. 
 #'                "years", "months", or "days" are allowed. Defult is "years" 
+#'                but it is not case sensitive.
 #' @param missingVal The value that will be inserted in place of Z-scores that
 #'                   cannot be determined. Either because age is out of bounds 
 #'                   of the reference WHO data, or because one of the required
@@ -50,8 +55,15 @@ calcZScores <- function(df, ageVar = "AGE", weightVar = "WT", heightVar = "HT",
     }
   })
   
-  # Make age unit option lower case. 
+  # Make options lower case to be case insensitive.
+  ageVar <- tolower(ageVar)
+  weightVar <- tolower(weightVar)
+  heightVar <- tolower(heightVar)
+  sexVar <- tolower(sexVar)
   ageUnit <- tolower(ageUnit)
+  
+  # Make column names lower case to match
+  names(df) <- tolower(names(df))
   
   # Assign the appripriate age conversion
   if(ageUnit == "days" | ageUnit == "day" | ageUnit == "d"){
